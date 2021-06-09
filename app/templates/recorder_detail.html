@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{%block link%}
+{%if submit.status_id == 1%}
+{%set n=2%}
+{%else%}
+{%set n=100000%}
+{%endif%}
+<meta http-equiv="refresh" content="{{n}}">
+{%endblock%}
+
+   {%block point%}
+                记录{{submit.id}}评测详情：
+    {%endblock%}
+    {%block label1%}
+                     <span class="label label-default">编程语言：{{submit.language.language}}</span>
+    {%endblock%}
+    {%block label2%}
+                     <span class="label label-default">代码长度：{{submit.byte}}</span>
+    {%endblock%}
+    
+    {%block label3%}
+                     <span class="label label-default">用时：{{time}}(s)</span>
+    {%endblock%}
+    {%block label4%}
+                     <span class="label label-default">内存占用
+                        {%if memory >1204%}
+                        {{memory//1024}}MB
+                        {%else%}
+                        {{memory}}KB
+                        {%endif%}</span>
+    {%endblock%}
+{%block main%}
+{%if submit.result%}
+   <div class="row clearfix">
+        <div class="col-md-8 column" style="border:5px solid #ffffff">
+            <div class="tabbable" id="tabs-679844">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                         <a href="#panel-637125" data-toggle="tab">测试点信息</a>
+                    </li>
+                    <li>
+                         <a href="#panel-33758" data-toggle="tab">源代码</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="panel-637125">
+                        <p>
+                        <table width="95%" class="table table-hover">
+                        <thread>
+                        <tr>
+                            <th>测试点</th>
+                            <th>测试结果</th>
+                            <th>时间占用(S)</th>
+                            <th>内存占用(KB)</th>
+                        </tr>
+                        </thread>
+                <tbody>
+                    {%for q in submit.result%}
+                    <tr >
+                        <td>{{q.test_point}}</td>
+                       
+                        <td><span class="label  label-{%if q.result == '测试通过'%}{{'success'}}{%else%}{{'warning'}}{%endif%}">{{q.result}}</span></td>
+                        <td>{{q.time_used}}</td>
+                        <td>
+                            {{q.memory_used}}
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="panel-33758">
+                        <p>
+                            {{code}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%else%}
+        <div class="col-md-8 column" style="border:5px solid #ffffff">
+            <h2 class="text-warning">暂无评测结果，请等待，若长时间仍无结果，请联系管理员</h2>
+        </div>
+        {%endif%}
+        <div class="col-md-4 column" style="border:5px solid #ffffff">
+            <div class="row clearfix">
+                <div class="panel panel-info">
+                <div class="panel-heading">
+                <h3 class="panel-title">提交者：{{submit.user.username}}</h3>
+                </div>
+                <div class="panel-body">
+                <p>题目名称：『{{submit.question_id}}』{{submit.question.question_name}}</p>
+                <p>评测状态：<span class="label label-{{color[submit.status_id-1]}}">{{submit.status.status}}</span></p>
+                <p>得分：<h4><span class="label label-lg label-danger">{{submit.rank}}分</span></h4></p>
+                <p>提交时间：{{submit.submit_time}}</p>
+                </div>
+ </div>
+            </div>
+        </div>
+    </div>
+
+{%endblock%}        

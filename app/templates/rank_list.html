@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{%block point%}
+天梯排名
+{%endblock%}
+{%block main%}
+<div class="row clearfix">
+            <table width="95%" class="table table-hover">
+                <thread>
+                    <tr>
+                        <th>排名</th>
+                        <th>用户名</th>
+                        <th>rank值</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    {%for q in table%}
+                    <tr >
+                       <td> {{loop.index}}</td>
+                        <td> <a href="{{'/personal_info/%s' %q.id}}" >
+                        {%if q.role_id!=3%}
+                        {{q.realname}}
+                        {%else%}
+                        {{q.students[0].name}}{%endif%} </a></td>
+                        <td>{{q.rank}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+{%endblock%}

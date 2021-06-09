@@ -1,0 +1,128 @@
+{%extends "base.html"%}
+ {%block point%}
+ {%if u1.role_id !=3%}
+{{u1.realname}}
+{%else%}
+{{u1.students[0].name}}
+{%endif%}的个人信息
+ {%endblock%}
+
+ {%block main%}
+ <div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="row clearfix">
+                <div class="col-md-4 column">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                通过次数/总提交次数
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                             {%if u1.submitted|length%}
+                    {%set rate=(((s|length)*100/(u1.submitted|length))|round|int) %}
+                    {%else%}
+                    {%set rate=0 %}
+                    {%endif%}
+                    <div class="col-md-12 column">
+                    <div class="progress active progress-striped" align="center">提交：{{u1.submitted
+                |length}}
+                    <div class="progress-bar progress-success" 
+        aria-valuemin="0" aria-valuemax="100" style="width:{{rate}}%" align="center">通过 ：{{s|length}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="panel-footer">
+                           <span class="text-danger">  通过率{{rate}}% </span>
+                        </div>
+                    </div>
+
+                
+            </div>
+            <div class="col-md-8 column ">
+                 <div class="col-md-12 column  bg-info">
+                   <h4>最近提交记录</h4></div> 
+                    <table width="95%" class="table table-bordered table-condensed">
+                <thread>
+                    <tr>
+                        <th>记录编号</th>
+                        <th>提交者</th>
+                        <th>提交时间</th>
+                        <th>题目名称</th>
+                        <th>使用语言</th>
+                        <th>状态</th>
+                        <th>代码长度</th>
+                        <th>得分</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    {%for q in table%}
+                    <tr >
+                       <td> <a href="{{'/recorder/%s' %q.id}}" >{{q.id}}</a></td>
+                        <td> <a href="{{'/personal_info/%s' %u.id}}" >{{q.user.username}} </a></td>
+                        <td> {{q.submit_time}} </td>
+                        <td><a href="{{'/question/%s' %q.question_id}}" >{{q.question.question_name}}</a></td>
+                        <td>{{q.language.language}}</td>
+                        <td><span class="label label-{{color[q.status_id-1]}}">{{q.status.status}}</span>
+                                
+                        </td>
+                        <td>
+                            {{q.byte}}
+                        </td>
+                        <td>
+                            {{q.rank}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                </div>
+        </div>
+    </div>
+</div>
+<div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="col-md-6 column">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        完成的题目数:{{s3.count()}}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                     {%for i in s3.all()%}
+                    <a href="/question/{{i[0]}}">{{i[0]}}</a>
+                    {%endfor%}
+                </div>
+                <div class="panel-footer">
+                    rank值：{{u1.rank}}
+                </div>
+        </div>
+    </div>
+    <div class="col-md-6 column">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        尝试的题目数:{{s2.count()}}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                     {%for i in s2.all()%}
+                    <a href="/question/{{i[0]}}">{{i[0]}}</a>
+                    {%endfor%}
+                </div>
+                <div class="panel-footer">
+                    {%if s2.count() !=0%}
+                    平均每题提交：{{(u.submitted|length)//s2.count()}}次
+                    {%else%}
+                    平均每题提交：0
+                    {%endif%}
+                </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+ {%endblock%}

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{%block point%}
+{%if u.role_id==3%}
+课程
+{%else%}
+控制台:{{request.remote_addr}}
+{%endif%}
+{%endblock%}
+
+
+{%block main%}
+{%if u.role_id==1 or u.role_id == 2%}
+	<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			{%for i in w%}
+				{{loop.index}}
+				<textarea style="color: aqua;">{{i[0].decode()}}</textarea>
+				
+			{%endfor%}
+			<div class="tabbable" id="tabs-601708">
+				<ul class="nav nav-tabs">
+					<li >
+						 <a href="#panel-167651" data-toggle="tab">基本信息导入与设置</a>
+					</li>
+					<li class="active">
+						 <a href="#panel-817823" data-toggle="tab">课程设置</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane " id="panel-167651">
+						<p>
+							<div class="row clearfix">
+		                        <div class="col-md-4 column">
+		                        	{% from 'bootstrap/form.html' import render_form %}
+		                        	<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						设置班级信息
+					</h3>
+				</div>
+				<div class="panel-body">
+					
+				</div>
+				<div class="panel-footer">
+					<a href="/download/class_info.xlsx">下载模板</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-4 column">                    	
+		    <div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						导入学生信息
+					</h3>
+				</div>
+				<div class="panel-body">
+					{{render_form(form)}}
+				</div>
+				<div class="panel-footer">
+					<a href="/download/students_info.xlsx">下载模板</a>
+				</div>
+			</div>
+		                        </div>
+
+		                        <div class="col-md-4 column">
+		                        	{% for message in get_flashed_messages() %}
+		                        	<div class="alert alert-success alert-dismissable">
+				 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h4>
+					成功
+				</h4> {{message}} <a href="#" class="alert-link">查看班级和学生信息</a>
+			</div>
+    
+                                    {% endfor %}
+
+		                        </div>
+	                        </div>
+						</p>
+					</div>
+					<div class="tab-pane active" id="panel-817823">
+						<p>
+							<div class="col-md-4 column">
+							
+							<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						上课&下课
+					</h3>
+				</div>
+				<div class="panel-body">
+					{{render_form(form1)}}
+				</div>
+				<div class="panel-footer">
+						</div>
+						<a id="modal-714985" href="#modal-container-714985" role="button" class="btn" data-toggle="modal">查看正在上课的班级</a>
+			
+			<div class="modal fade" id="modal-container-714985" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								上课中：
+							</h4>
+						</div>
+						<div class="modal-body">
+							<table width="95%" class="table table-hover">
+                <thread>
+                    <tr>
+                    	<th>序号</th>
+                        <th>班级名</th>
+                        <th>任课教师</th>
+                        <th>状态</th>
+                       `
+                    </tr>
+                </thread>
+                <tbody>
+                    
+                    {%for q in cla%}
+                    <tr >
+                       <td> {{loop.index}}</td>
+                        <td> 
+                        {{q.name}}</td>
+                        <td>{{q.teacher_name.username}}
+                        </td>
+                        <td>{{q.status}}
+                        </td>
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+					</div>
+				</div>
+							<div class="col-md-4 column">
+								<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						出题
+					</h3>
+				</div>
+				<div class="panel-body">
+					输入题目，提交测试数据 。<br>
+					<br>
+					管理员会对题目进行审核。<br>
+					<br>
+
+				</div>
+				<div class="panel-footer"><a href="/index/set_questions"><button type="button" class="btn btn-default btn-primary btn-block">前往</button></a>
+			
+		</div>
+						
+					</div>
+				</div>
+			
+		
+	
+	<div class="row clearfix">
+
+	</div>
+
+{%endif%}
+{%endblock%}
+

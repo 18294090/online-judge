@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{%block link%}
+{{codemirror.include_codemirror()}}
+{%endblock%}
+{%block point%}
+P{{q.id}}({{q.question_name}})题目详情:
+{%endblock%}
+{%block label1%}提交：{{q.submit_num}}{%endblock%}
+{%block label2%}通过：{{q.passed_num}}{%endblock%}
+{%block label3%}时间限制：{{q.timelimit}}ms{%endblock%}
+{%block label4%}内存限制：
+{%if q.memorylimit >1204%}
+{{q.memorylimit//1024}}MB
+{%else%}
+{{q.memorylimit}}KB
+{%endif%}
+{%endblock%}
+{%block main%}
+<div class="container" >
+    <div class="row clearfix">
+        <div class="col-md-8 column " style="border-bottom:20px solid #ffffff">
+            <div class="tabbable" id="tabs-146662">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                         <a href="#panel-928491" data-toggle="tab">题目详情</a>
+                    </li>
+                    <li>
+                         <a href="#panel-914587" data-toggle="tab">代码提交</a>
+                    </li>
+                </ul>
+                <div class="tab-content ">
+                    <div class="tab-pane active bg-info" id="panel-928491">
+                        <p>
+                            {{q.describe|safe}}
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="panel-914587">
+                        <p>
+                            {% from 'bootstrap/form.html' import render_form %}
+                            {{render_form(form)}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 column">
+            <div class="row clearfix">
+                <div class="col-md-12 column  bg-info" style="border-bottom:10px solid #ffffff">
+                    <p class="text-success">
+                         <b>作者：</b> {{q.author.username}}<br><br>
+                         <b>题目名称：</b>{{q.question_name}}<br>
+                        <br>
+                    </p>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-12 column bg-success" style="border-bottom:10px solid #ffffff">
+                     <b>难度水平：</b> {{q.level.level_name}}<br><br>
+                     
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-12 column bg-info" style="border-bottom:10px solid #ffffff">
+                     <b>算法标签：</b> {{q.algorithm}}<br><br>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-12 column bg-success" style="border-bottom:10px solid #ffffff">
+                     
+                     <a href="/recorders/question/{{q.id}}"><button type="button" class="btn btn-default btn-link">
+                        查看提交记录
+                     </button></a>
+                     <button type="button" class="btn btn-default btn-link">查看题解</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{%endblock%}

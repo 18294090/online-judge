@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{%block point%}
+{%if id == "all"%}
+{{'题库列表'}}
+{%else%}
+{{'题目搜索结果'}}
+{%endif%}
+{%endblock%}
+{%block main%} 
+
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+		{{ pagination.links }}
+		</div>
+	</div>
+			 <div class="row clearfix">
+			<table width="95%" class="table table-hover">
+				<thread>
+					<tr>
+						<th>编号</th>
+						<th>题目名称</th>
+						<th>算法标签</th>
+						<th>来源</th>
+						<th>通过/提交</th>
+					</tr>
+				</thread>
+				<tbody>
+					{%for q in questions%}
+					<tr >
+						<td>{{q.id}}</td>
+						<td><a href="{{'/question/%s' %q.id}}" > {{q.title}}</a> </td>
+						<td><span class="label label-info">{{q.tags}}</span></td>
+						<td>{{q.source}}</td>
+						<td>
+							{{q.accepted}}/{{q.submit}}
+							
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="row">
+				<div class="col-md-12">
+				{{ pagination.links }}
+				</div>
+			</div>
+			</div>
+		
+		
+{%endblock%}

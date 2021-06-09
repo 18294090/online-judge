@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{%block point%}
+试题设计
+{%endblock%}
+    {%block main%}
+    <div class="row clearfix">
+     	<div class="col-md-6 column">
+			{% from 'bootstrap/form.html' import render_form%}
+			{{render_form(form)}}
+		</div>
+		{{ ckeditor.load() }}
+{{ ckeditor.config(name='describe') }}
+	    <div class="col-md-6 column">
+	    	<div class="container-fluid">
+	<div class="row-fluid">
+		
+		<div class="span6">
+			<h3>题目设计注意事项：</h3>
+			<dl>
+				<dt class="text-warning">上传的测评数据必须是压缩文件，其中包含若干个*.in格式文件为输入数据，*.out文件为相应的输出数据。例如：若有三组测试数据，则压缩包中的文件为0.in，1.in,2.in三个输入数据文件和0.out，1.out，2.out三个输出数据文件<br>
+				----------------------------------------------------------------------------------------
+
+
+				</dt>
+
+				<dt class="text-info">
+					在题目描述中，要说明输入格式、输出格式、输入输出样例，例如，计算“a+b”的题目描述如下：<br>
+					<br>
+				</dt>
+				<dt>
+					题目描述
+					<br><br>
+				</dt>
+				<dd>
+					输入两个整数 a,ba, ba,b，输出它们的和（∣a∣,∣b∣≤109|a|,|b| \le {10}^9∣a∣,∣b∣≤109）。
+					<br><br>
+				</dd>
+				<dt>
+					注意
+					<br><br>
+				</dt>
+				<dd>
+					1.Pascal 使用 integer 会爆掉哦！
+				</dd>
+				<dd>
+					2.有负数哦！
+				</dd>
+					<dd>
+					C/C++ 的 main 函数必须是 int 类型，而且 C 最后要 return 0。这不仅对洛谷其他题目有效，而且也是 NOIP/CSP/NOI 比赛的要求
+					<br><br>
+				</dd>
+				<dt>输入格式
+					<br><br>
+				</dt>
+				<dd>两个以空格分开的整数。</dd>
+				<br>
+				<dt>输出格式</dt>
+				<br>
+				<dd>一个整数。</dd>
+				<br><br>
+				<dt>输入输出样例</dt>
+				<br>
+				<dd>输入 #1</dd>
+				<dd>20 30</dd>
+				<dd>输出 #1</dd>
+				<dd>50</dd>
+			</dl>
+		</div>
+	</div>
+</div>
+		</div>
+	</div>
+    {% endblock %}
+		{% block footer %}
+         <div id="footer">
+            <h4>网站底部内容</h4>
+        </div>
+        {% endblock %}
+		<!-- Scripts -->
+		<script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+		{{bootstrap.load_js()}}
+	</body>
+</html>

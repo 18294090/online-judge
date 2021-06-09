@@ -1,0 +1,75 @@
+{%extends "base.html"%}
+ {%block point%}
+ {%if table|length!=0%}
+{%if sg=="all"%}
+{{"全部"}}
+{%elif sg=="question"%}
+{{"问题"+table[0].question.question_name}}
+{%elif sg=="user"%}
+{{"用户"+table[0].user.username}}
+{%endif%}
+{%endif%}
+评测记录{%endblock%}
+
+ {%block label4%}<span class="label label-default">总计:{{table|length}}</span>
+ {%endblock%}    
+{% from 'bootstrap/table.html' import render_table %}
+ {%block main%}
+
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="panel-group" id="panel-594005">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <a class="panel-title" data-toggle="collapse" data-parent="#panel-594005" href="#panel-element-536905">高级筛选</a>
+                    </div>
+                    <div id="panel-element-536905" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            {% from 'bootstrap/form.html' import render_form %}
+                            {{render_form(sift,form_type="horizontal")}}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+ <div class="row clearfix">
+            <table width="95%" class="table table-hover">
+                <thread>
+                    <tr>
+                        <th>编号</th>
+                        <th>提交者</th>
+                        <th>提交时间</th>
+                        <th>题目名称</th>
+                        <th>使用语言</th>
+                        <th>状态</th>
+                        <th>代码长度</th>
+                        <th>得分</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    {%for q in table%}
+                    <tr >
+                       <td> <a href="{{'/recorder/%s' %q.id}}" >{{q.id}}</a></td>
+                        <td> <a href="{{'/personal_info/%s' %current_user.id}}" >{%if q.user.roleId !=3%}{{q.user.username}}{%else%}{{q.user.students[0].name}}{%endif%} </a></td>
+                        <td> {{q.submit_time}} </td>
+                        <td><a href="{{'/question/%s' %q.question_id}}" >{{q.question.question_name}}</a></td>
+                        <td>{{q.language.language}}</td>
+                        <td><span class="label label-{{color[q.status_id-1]}}">{{q.status.status}}</span>
+                                
+                        </td>
+                        <td>
+                            {{q.byte}}
+                        </td>
+                        <td>
+                            {{q.rank}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+
+{%endblock%}
